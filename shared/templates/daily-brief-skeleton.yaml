@@ -1,0 +1,104 @@
+---
+title: "Daily Market Brief"
+date: "YYYY-MM-DD"
+author: "Equiforte Intelligence"
+status: "published"
+summary: ""
+preview: |
+  <h3>1. Market Snapshot</h3>
+
+  <p><strong>U.S. Equities</strong></p>
+  <table>
+    <thead><tr><th>Index</th><th>Level</th><th>Change</th><th>% Chg</th></tr></thead>
+    <tbody>
+      <tr><td>S&amp;P 500</td><td></td><td></td><td></td></tr>
+      <tr><td>Dow 30</td><td></td><td></td><td></td></tr>
+      <tr><td>Nasdaq Composite</td><td></td><td></td><td></td></tr>
+      <tr><td>Russell 2000</td><td></td><td></td><td></td></tr>
+      <tr><td>VIX</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Rates &amp; Credit</strong></p>
+  <table>
+    <thead><tr><th>Instrument</th><th>Level</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>UST 2Y</td><td></td><td></td></tr>
+      <tr><td>UST 10Y</td><td></td><td></td></tr>
+      <tr><td>UST 30Y</td><td></td><td></td></tr>
+      <tr><td>Fed Funds</td><td></td><td></td></tr>
+      <tr><td>HY OAS (ICE BofA)</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Commodities</strong></p>
+  <table>
+    <thead><tr><th>Commodity</th><th>Price</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>WTI Crude</td><td></td><td></td></tr>
+      <tr><td>Brent Crude</td><td></td><td></td></tr>
+      <tr><td>Gold (Spot)</td><td></td><td></td></tr>
+      <tr><td>Natural Gas</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>FX &amp; Digital Assets</strong></p>
+  <table>
+    <thead><tr><th>Pair</th><th>Level</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>EUR/USD</td><td></td><td></td></tr>
+      <tr><td>DXY</td><td></td><td></td></tr>
+      <tr><td>USD/JPY</td><td></td><td></td></tr>
+      <tr><td>BTC/USD</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h3>2. Regulatory Watch</h3>
+
+  <p><strong></strong></p>
+  <p></p>
+
+full_content: |
+  <h3>1. Market Snapshot</h3>
+  <!-- Copy preview section 1 here -->
+
+  <h3>2. Regulatory Watch</h3>
+  <!-- Copy preview section 2 here -->
+
+  <h3>3. Operational Intel</h3>
+
+  <p><strong></strong></p>
+  <p></p>
+
+  <h3>4. Data Snapshot</h3>
+
+  <table>
+    <thead><tr><th>Metric</th><th>Value</th><th>Signal</th></tr></thead>
+    <tbody>
+      <tr><td>S&amp;P 500</td><td></td><td></td></tr>
+      <tr><td>VIX</td><td></td><td></td></tr>
+      <tr><td>UST 10Y</td><td></td><td></td></tr>
+      <tr><td>HY OAS</td><td></td><td></td></tr>
+      <tr><td>WTI Crude</td><td></td><td></td></tr>
+      <tr><td>Gold</td><td></td><td></td></tr>
+      <tr><td>EUR/USD</td><td></td><td></td></tr>
+      <tr><td>Fed Funds</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h3>5. The CFO Take</h3>
+
+  <ul>
+    <li><strong>Action 1 — </strong> </li>
+    <li><strong>Action 2 — </strong> </li>
+    <li><strong>Action 3 — </strong> </li>
+  </ul>
+
+  <h3>6. Coming This Week</h3>
+
+  <table>
+    <thead><tr><th>Date</th><th>Event</th><th>Significance</th></tr></thead>
+    <tbody>
+      <tr><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>

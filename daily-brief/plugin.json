@@ -1,0 +1,19 @@
+{
+  "name": "daily-brief",
+  "version": "1.0.0",
+  "description": "Generate daily market intelligence for Equiforte — daily briefs and ticker banners for CFOs and decision-makers in PE, credit, and alternatives.",
+  "skills": [
+    "skills/daily-brief.md",
+    "skills/market-snapshot.md",
+    "skills/geopolitical-monitor.md",
+    "skills/regulatory-ops-intel.md",
+    "skills/event-calendar.md",
+    "skills/intelligence-content.md"
+  ],
+  "commands": [
+    "commands/daily-brief.md"
+  ],
+  "agents": [
+    "agents/brief-generator.md"
+  ]
+}
