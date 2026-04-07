@@ -67,36 +67,55 @@ Gather data using these skills in order, then assemble the final YAML output:
    ls -la output/intelligence-data/daily-brief/*.yaml output/intelligence-data/ticker/*.yaml output/intelligence-data/sources.md
    ```
 
-### YAML Structure Requirements
+### YAML Structure — STRICT FORMAT (website will break otherwise)
 
-**CRITICAL: Every YAML file MUST begin with `---` on the very first line.** No whitespace, comments, or blank lines before `---`.
+The website parses these files with `gray-matter` and reads ONLY specific fields. Any deviation produces blank pages.
 
-Each daily-brief YAML MUST contain:
-- `title` — Full title with date
-- `date` — YYYY-MM-DD format
-- `author` — "Equiforte Intelligence"
-- `status` — "published"
-- `summary` — Under 200 chars, for homepage card
-- `preview` — HTML content visible to all (ungated, first 2 sections)
-- `full_content` — HTML content with ALL sections (gated, includes preview content plus additional sections)
+**Daily brief YAML — EXACTLY 7 top-level fields, nothing else:**
+```yaml
+---
+title: "Daily Market Brief"
+date: "YYYY-MM-DD"
+author: "Equiforte Intelligence"
+status: "published"
+summary: "Under 200 chars"
+preview: |
+  <h3>1. Market Snapshot</h3>
+  ...HTML tables and content for sections 1-2...
+  <h3>2. Regulatory Watch</h3>
+  ...HTML content...
+full_content: |
+  <h3>1. Market Snapshot</h3>
+  ...same as preview...
+  <h3>2. Regulatory Watch</h3>
+  ...same as preview...
+  <h3>3. Operational Intel</h3>
+  ...HTML content...
+  <h3>4. Data Snapshot</h3>
+  ...HTML table...
+  <h3>5. The CFO Take</h3>
+  ...HTML list...
+  <h3>6. Coming This Week</h3>
+  ...HTML table...
+```
 
-The ticker YAML uses a different format — see intelligence-content skill.
+**DO NOT** add `sections:`, `subtitle:`, `classification:`, `generated_at:`, `footer:`, `metadata:`, or ANY other top-level field. The website ignores them.
 
-### Daily Brief Standard Sections (in full_content)
+**DO NOT** use plain text or markdown inside `preview`/`full_content`. It MUST be HTML (`<h3>`, `<table>`, `<p>`, `<ul>`, `<strong>`, etc.) because the website renders it via `dangerouslySetInnerHTML`.
 
-1. **Market Snapshot** — rates, spreads, deal activity (HTML tables)
-2. **Regulatory Watch** — new rules, deadlines, guidance
-3. **Operational Intel** — fund admin, technology, vendor news
-4. **Data Snapshot** — key metrics table
-5. **The CFO Take** — 3 actionable items for PE CFOs today
-6. **Coming This Week** — upcoming events and data releases
+**Ticker YAML — EXACTLY 3 top-level fields:**
+```yaml
+---
+date: "YYYY-MM-DD"
+updated_at: "YYYY-MM-DDTHH:MM:SS-04:00"
+items:
+  - text: "S&P 500 6,381.77 ▲ +0.20%"
+    category: "equity"
+```
 
-**Preview** includes sections 1-2 (Market Snapshot + Regulatory Watch).
-**Full content** includes all 6 sections.
+**DO NOT** use `equities:`, `fixed_income:`, `alerts:`, `symbol:`, `value:`, `direction:` or any other structure. Each item has ONLY `text` and `category`.
 
-### Ticker Banner
-
-Distill 4-6 key data points from the brief. Each item under 80 chars with ▲/▼ direction indicators.
+See the `intelligence-content` skill for complete examples from the live website.
 
 ## Focus Area Guidance
 
