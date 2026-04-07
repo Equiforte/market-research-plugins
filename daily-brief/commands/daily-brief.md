@@ -1,6 +1,6 @@
 ---
 name: daily-brief
-description: Generate today's daily market brief and ticker for equiforte.com/intelligence. Produces 2 YAML files — a daily brief with 6 sections and a ticker banner with key data points.
+description: Generate today's daily market brief and ticker for equiforte.com/intelligence. Produces 3 files — a daily brief YAML with 6 sections, a ticker banner YAML, and a sources list.
 arguments:
   - name: date
     description: "Date for the briefing (YYYY-MM-DD). Defaults to today."
