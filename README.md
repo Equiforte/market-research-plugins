@@ -13,16 +13,16 @@ Mono-repo for Equiforte market research plugins. Each plugin generates structure
 ```
 market-research-plugins/
 ├── marketplace.json              # Plugin registry
-├── daily-brief/                  # Daily brief plugin
-│   ├── plugin.json
-│   ├── CLAUDE.md
-│   ├── skills/                   # Research + assembly skills
-│   ├── commands/                 # Slash commands
-│   ├── agents/                   # Autonomous agents
-│   └── hooks/                    # Post-generation hooks
-└── shared/
-    ├── schemas/                  # YAML validation schemas
-    └── templates/                # Skeleton templates
+└── daily-brief/                  # Daily brief plugin (self-contained)
+    ├── plugin.json
+    ├── CLAUDE.md
+    ├── skills/                   # Research + assembly skills
+    ├── commands/                 # Slash commands
+    ├── agents/                   # Autonomous agents
+    ├── hooks/                    # Post-generation hooks
+    └── shared/                   # Schemas + templates
+        ├── schemas/
+        └── templates/
 ```
 
 ## Usage
