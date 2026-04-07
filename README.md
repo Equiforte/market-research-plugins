@@ -13,16 +13,31 @@ Mono-repo for Equiforte market research plugins. Each plugin generates structure
 ```
 market-research-plugins/
 ├── marketplace.json              # Plugin registry
-└── daily-brief/                  # Daily brief plugin (self-contained)
-    ├── plugin.json
-    ├── CLAUDE.md
-    ├── skills/                   # Research + assembly skills
+└── daily-brief/                  # Daily brief plugin
+    ├── .claude-plugin/
+    │   └── plugin.json           # Plugin manifest
+    ├── CLAUDE.md                 # Plugin-level instructions
     ├── commands/                 # Slash commands
+    │   └── daily-brief.md
     ├── agents/                   # Autonomous agents
-    ├── hooks/                    # Post-generation hooks
-    └── shared/                   # Schemas + templates
-        ├── schemas/
-        └── templates/
+    │   └── brief-generator.md
+    ├── skills/                   # Auto-activating skills
+    │   ├── daily-brief/
+    │   │   └── SKILL.md
+    │   ├── market-snapshot/
+    │   │   └── SKILL.md
+    │   ├── geopolitical-monitor/
+    │   │   └── SKILL.md
+    │   ├── regulatory-ops-intel/
+    │   │   └── SKILL.md
+    │   ├── event-calendar/
+    │   │   └── SKILL.md
+    │   └── intelligence-content/
+    │       └── SKILL.md
+    └── hooks/                    # Event handlers
+        ├── hooks.json
+        └── scripts/
+            └── post-generate.sh
 ```
 
 ## Usage
@@ -37,6 +52,7 @@ market-research-plugins/
 
 ## Output
 
-Each run produces 2 YAML files committed to the `equiforte.com` website repo:
-- `src/content/intelligence-data/daily-brief/YYYY-MM-DD.yaml`
-- `src/content/intelligence-data/ticker/latest.yaml`
+Each run produces 3 files in `output/`:
+- `YYYY-MM-DD.yaml` — Daily brief (6 HTML sections, preview/gated split)
+- `latest.yaml` — Ticker banner (4-6 scrolling items)
+- `sources.md` — Source attribution

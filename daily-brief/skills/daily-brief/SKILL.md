@@ -1,16 +1,6 @@
 ---
 name: daily-brief
 description: Generate a comprehensive daily market briefing with global indices, rates, commodities, FX, economic data, geopolitical developments, and upcoming events. Produces YAML intelligence content files for the Equiforte website. Use when the user asks to "generate daily brief", "create morning briefing", "run the daily brief", or invokes /daily-brief.
-arguments:
-  - name: focus
-    description: "Optional focus area: 'pe' (private equity), 'pd' (private debt / credit), 'hf' (hedge funds), 'ib' (investment banking), or 'all' (default). Adjusts which sections are emphasized."
-    required: false
-  - name: date
-    description: "Date for the briefing (YYYY-MM-DD). Defaults to today."
-    required: false
-  - name: output
-    description: "Output path for the intelligence data directory. Defaults to ./output/intelligence-data"
-    required: false
 ---
 
 # Daily Market Brief
@@ -31,22 +21,22 @@ This brief must complete within **5 minutes**. Total web operations (WebSearch +
 
 ## Instructions
 
-Gather data using these skills in order, then assemble the final YAML output:
+Follow these 5 research phases in order. Each phase has a corresponding SKILL.md file at `${CLAUDE_PLUGIN_ROOT}/skills/<name>/SKILL.md` with the detailed search strategies — read it before starting that phase.
 
-1. **market-snapshot** — global equity indices, rates, credit spreads, commodities, FX, volatility
-2. **geopolitical-monitor** — central bank actions, economic data releases, geopolitical/trade/policy developments, major corporate events
-3. **regulatory-ops-intel** — SEC/CFTC/EU regulatory actions, fund admin technology news, ILPA updates, operational developments for PE CFOs
-4. **event-calendar** — upcoming economic calendar, central bank meetings, earnings, conferences, IPOs, auctions
+1. **Market Snapshot** (consult `market-snapshot/SKILL.md`) — global equity indices, rates, credit spreads, commodities, FX, volatility
+2. **Geopolitical Monitor** (consult `geopolitical-monitor/SKILL.md`) — central bank actions, economic data releases, geopolitical/trade/policy developments, major corporate events
+3. **Regulatory & Ops Intel** (consult `regulatory-ops-intel/SKILL.md`) — SEC/CFTC/EU regulatory actions, fund admin technology news, ILPA updates, operational developments for PE CFOs
+4. **Event Calendar** (consult `event-calendar/SKILL.md`) — upcoming economic calendar, central bank meetings, earnings, conferences, IPOs, auctions
 
-**Important — avoid cross-task duplication:**
-- Central bank **actions that already happened today** → geopolitical-monitor only
-- Central bank **upcoming meeting dates** → event-calendar only
-- Economic data **already released today** → geopolitical-monitor only
-- Economic data **scheduled for future dates** → event-calendar only
-- **Regulatory news** → regulatory-ops-intel only (not geopolitical-monitor)
-- **Fund admin/tech vendor news** → regulatory-ops-intel only
+**Avoid cross-phase duplication:**
+- Central bank **actions that already happened today** → phase 2 only
+- Central bank **upcoming meeting dates** → phase 4 only
+- Economic data **already released today** → phase 2 only
+- Economic data **scheduled for future dates** → phase 4 only
+- **Regulatory news** → phase 3 only (not phase 2)
+- **Fund admin/tech vendor news** → phase 3 only
 
-5. **intelligence-content** skill — use this skill's format specifications to assemble all collected data into the final YAML output files. No additional searches.
+5. **Assembly** (consult `intelligence-content/SKILL.md`) — assemble all collected data into the final YAML output files. No additional searches. The intelligence-content SKILL.md contains the exact YAML schemas, complete examples from the live website, and a WRONG vs RIGHT section.
 
 ## Output: Intelligence Content YAML Files
 
@@ -64,7 +54,7 @@ Gather data using these skills in order, then assemble the final YAML output:
 
 3. **Run the validation hook** (MANDATORY — do not skip):
    ```
-   bash daily-brief/hooks/post-generate.sh
+   bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/post-generate.sh
    ```
    This script validates that both YAML files match the exact schema the website expects.
    - If it exits with code 0: **PASS** — output is ready.

@@ -7,9 +7,10 @@
 
 ## Output Files
 
-Each run produces exactly 2 files:
+Each run produces 3 files:
 1. `daily-brief/YYYY-MM-DD.yaml` — Full daily brief (6 sections, preview/gated split)
 2. `ticker/latest.yaml` — Ticker banner (4-6 scrolling items)
+3. `sources.md` — Source attribution with URLs grouped by research phase
 
 ## CRITICAL Rules
 
@@ -21,9 +22,15 @@ Each run produces exactly 2 files:
 - Daily brief YAML has EXACTLY 7 top-level fields: `title`, `date`, `author`, `status`, `summary`, `preview`, `full_content`. NO other fields (`sections`, `subtitle`, `classification`, `footer`, etc.).
 - Ticker YAML has EXACTLY 3 top-level fields: `date`, `updated_at`, `items`. Each item has ONLY `text` and `category`. NO `symbol`, `value`, `direction`, `equities`, `alerts`, etc.
 
+## Fixed Values (never change these)
+
+- `title` is always `"Daily Market Brief"` (NOT "Daily Market Intelligence Brief")
+- `author` is always `"Equiforte Intelligence"` (NOT "Equiforte Research")
+- Do NOT use branding from any `brand-config.json` — ignore it completely for daily brief output. No `classification`, `confidentiality_notice`, `disclaimer`, or firm name from brand config.
+
 ## Mandatory Validation
 
-After generating output, you MUST run `bash daily-brief/hooks/post-generate.sh`. This validates that both YAML files match the exact schema the website expects. If it fails (non-zero exit), read the errors, fix the files, and re-run until it passes. Do NOT deliver files that fail validation.
+After generating output, you MUST run `bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/post-generate.sh`. This validates that both YAML files match the exact schema the website expects. If it fails (non-zero exit), read the errors, fix the files, and re-run until it passes. Do NOT deliver files that fail validation. If the hook script is not found, the agent has an inline validation script as fallback.
 
 ## Constraints
 

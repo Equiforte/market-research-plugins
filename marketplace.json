@@ -8,7 +8,7 @@
       "path": "daily-brief",
       "version": "1.0.0",
       "description": "Generate daily market intelligence briefs and ticker banners for CFOs and decision-makers in PE, credit, and alternatives.",
-      "entry": "daily-brief/plugin.json"
+      "entry": "daily-brief/.claude-plugin/plugin.json"
     }
   ]
 }
