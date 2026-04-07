@@ -46,48 +46,47 @@ Follow the skill's workflow:
 4. event-calendar (WebFetch investing.com + WebSearch)
 5. intelligence-content assembly (no searches)
 
-### 4. Validate Output
+### 4. Validate Output (MANDATORY — must pass before delivery)
 
-After writing files, verify:
-
-```bash
-# Check files exist and are non-empty
-test -s output/intelligence-data/daily-brief/$(date +%Y-%m-%d).yaml && echo "Daily brief: OK" || echo "Daily brief: MISSING"
-test -s output/intelligence-data/ticker/latest.yaml && echo "Ticker: OK" || echo "Ticker: MISSING"
-
-# Check YAML starts with ---
-head -1 output/intelligence-data/daily-brief/$(date +%Y-%m-%d).yaml
-head -1 output/intelligence-data/ticker/latest.yaml
-```
-
-If validation fails, retry the intelligence-content assembly step (do not re-run research).
-
-### 5. Deploy to Website Repo
-
-Copy output files to the equiforte.com website repo:
+Run the validation hook:
 
 ```bash
-WEBSITE_REPO=~/git/equiforte.com/src/content/intelligence-data
-DATE=$(date +%Y-%m-%d)
-
-cp output/intelligence-data/daily-brief/${DATE}.yaml ${WEBSITE_REPO}/daily-brief/
-cp output/intelligence-data/ticker/latest.yaml ${WEBSITE_REPO}/ticker/
+bash daily-brief/hooks/post-generate.sh
 ```
 
-### 6. Git Commit (if auto_commit enabled)
+**This is a hard gate.** The hook checks that both YAML files match the exact structure the website parser expects. It checks for:
+- Required fields present (`title`, `date`, `author`, `status`, `summary`, `preview`, `full_content`)
+- Forbidden fields absent (no `sections:`, `subtitle:`, `classification:`, `equities:`, `alerts:`, etc.)
+- HTML content present (not plain text or markdown)
+- All 6 section `<h3>` headers in `full_content`
+- Ticker items have only `text` + `category` (not `symbol`/`value`/`direction`)
+- Correct item count (4-6)
 
-```bash
-cd ~/git/equiforte.com
-git add src/content/intelligence-data/daily-brief/${DATE}.yaml
-git add src/content/intelligence-data/ticker/latest.yaml
-git commit -m "intelligence: daily brief ${DATE}"
-```
+### 5. Fix-and-Retry Loop (if validation fails)
 
-Do NOT push unless explicitly configured — the post-generate hook handles push decisions.
+If the hook exits with non-zero:
+
+1. **Read every ERROR line** in the output — each one tells you exactly what's wrong
+2. **Read the intelligence-content skill** for the correct format — it has complete examples from the live website and a WRONG vs RIGHT section
+3. **Fix the files** — rewrite the daily brief and/or ticker YAML to match the expected schema. Do NOT re-run the research skills. Only redo the assembly.
+4. **Re-run the validation hook**: `bash daily-brief/hooks/post-generate.sh`
+5. **Repeat until exit code 0.** Maximum 3 attempts — if it still fails after 3 tries, stop and report the remaining errors.
+
+**You MUST NOT deliver output that fails validation.** The website will render blank pages or crash.
+
+### 6. Output Collection
+
+When validation passes (exit code 0), the hook automatically copies deliverables to `./output/`:
+- `output/YYYY-MM-DD.yaml` — the daily brief
+- `output/latest.yaml` — the ticker
+- `output/sources.md` — the sources list
+
+These are the final deliverables. No further copying is needed.
 
 ## Error Handling
 
-- If a WebFetch fails (403, timeout), skip that source and note the gap
+- If a WebFetch fails (403, timeout), skip that source and note the gap in sources.md
 - If a WebSearch returns no results, try one alternative query before marking as N/A
-- If output validation fails after retry, log the error and exit without deploying
-- Never deploy invalid or incomplete YAML to the website repo
+- If validation fails, fix the assembly output and retry (up to 3 times)
+- After 3 failed validation attempts, stop and report the errors — do not deliver invalid files
+- Never deliver YAML that fails the post-generate hook

@@ -62,10 +62,20 @@ Gather data using these skills in order, then assemble the final YAML output:
    - **`output/intelligence-data/ticker/latest.yaml`** — Ticker banner with 4-6 key data points from the brief
    - **`output/intelligence-data/sources.md`** — All sources used during research, grouped by skill, with URLs and what data was pulled from each
 
-3. After writing, verify all files exist and are non-empty:
+3. **Run the validation hook** (MANDATORY — do not skip):
    ```
-   ls -la output/intelligence-data/daily-brief/*.yaml output/intelligence-data/ticker/*.yaml output/intelligence-data/sources.md
+   bash daily-brief/hooks/post-generate.sh
    ```
+   This script validates that both YAML files match the exact schema the website expects.
+   - If it exits with code 0: **PASS** — output is ready.
+   - If it exits with non-zero: **FAIL** — you MUST read every ERROR line, fix the files, and re-run the hook. Repeat until it passes. Do NOT deliver output that fails validation.
+
+   **Common fixes the hook will catch:**
+   - Forbidden fields like `sections:`, `subtitle:`, `classification:` → remove them, use only the 7 allowed fields
+   - Missing `preview: |` or `full_content: |` → content must be YAML multiline strings with HTML
+   - Plain text instead of HTML → wrap in `<h3>`, `<table>`, `<p>`, `<ul>` tags
+   - Wrong ticker structure → each item needs only `text:` and `category:`, not `symbol:`/`value:`/`direction:`
+   - Missing section headers → ensure all 6 `<h3>` section headers are in `full_content`
 
 ### YAML Structure — STRICT FORMAT (website will break otherwise)
 

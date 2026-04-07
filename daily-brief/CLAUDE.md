@@ -14,10 +14,16 @@ Each run produces exactly 2 files:
 ## CRITICAL Rules
 
 - Every YAML file MUST begin with `---` on the very first line. No whitespace, comments, or blank lines before it. The website parser requires this.
-- All content is HTML within YAML `preview` and `full_content` fields.
+- All content is HTML within YAML `preview` and `full_content` fields. NOT plain text, NOT markdown. The website renders via `dangerouslySetInnerHTML`.
 - Facts and sourced data only. No opinions, forecasts, or fabrication.
 - `N/A` for unavailable data — never make up numbers.
 - `full_content` MUST include all preview content plus additional gated sections.
+- Daily brief YAML has EXACTLY 7 top-level fields: `title`, `date`, `author`, `status`, `summary`, `preview`, `full_content`. NO other fields (`sections`, `subtitle`, `classification`, `footer`, etc.).
+- Ticker YAML has EXACTLY 3 top-level fields: `date`, `updated_at`, `items`. Each item has ONLY `text` and `category`. NO `symbol`, `value`, `direction`, `equities`, `alerts`, etc.
+
+## Mandatory Validation
+
+After generating output, you MUST run `bash daily-brief/hooks/post-generate.sh`. This validates that both YAML files match the exact schema the website expects. If it fails (non-zero exit), read the errors, fix the files, and re-run until it passes. Do NOT deliver files that fail validation.
 
 ## Constraints
 
