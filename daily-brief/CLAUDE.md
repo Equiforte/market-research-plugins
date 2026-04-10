@@ -34,7 +34,7 @@ After generating output, you MUST run `bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/
 
 ## Constraints
 
-- Total web operations per run: max 20 (WebSearch + WebFetch combined)
+- Total web operations per run: max 26 (WebSearch + WebFetch combined)
 - Total runtime: max 5 minutes
 - Business days only (Mon-Fri, skip US market holidays)
 

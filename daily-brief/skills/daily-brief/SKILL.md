@@ -9,11 +9,12 @@ Generate a daily market briefing for **{{ focus | default: "all" }}** profession
 
 ## CRITICAL: Efficiency Constraints
 
-This brief must complete within **5 minutes**. Total web operations (WebSearch + WebFetch combined): **maximum 20**.
+This brief must complete within **5 minutes**. Total web operations (WebSearch + WebFetch combined): **maximum 26**.
 
 - Market snapshot: 2-3 WebSearch + 3 WebFetch = max 6 steps
 - Geopolitical monitor: 4-5 WebSearch = max 5 steps
 - Regulatory & ops intel: max 4 WebSearch
+- PE community news: 5 WebFetch + 1 WebSearch = max 6 steps (steps 4-6 conditional)
 - Event calendar: 2-3 WebSearch + 1-2 WebFetch = max 5 steps
 - Intelligence content assembly: 0 searches (uses only collected data)
 
@@ -25,18 +26,23 @@ Follow these 5 research phases in order. Each phase has a corresponding SKILL.md
 
 1. **Market Snapshot** (consult `market-snapshot/SKILL.md`) — global equity indices, rates, credit spreads, commodities, FX, volatility
 2. **Geopolitical Monitor** (consult `geopolitical-monitor/SKILL.md`) — central bank actions, economic data releases, geopolitical/trade/policy developments, major corporate events
-3. **Regulatory & Ops Intel** (consult `regulatory-ops-intel/SKILL.md`) — SEC/CFTC/EU regulatory actions, fund admin technology news, ILPA updates, operational developments for PE CFOs
-4. **Event Calendar** (consult `event-calendar/SKILL.md`) — upcoming economic calendar, central bank meetings, earnings, conferences, IPOs, auctions
+3. **Regulatory & Ops Intel** (consult `regulatory-ops-intel/SKILL.md`) — SEC/CFTC/EU regulatory actions, fund admin technology news, ILPA template/DDQ updates, operational developments for PE CFOs
+4. **PE Community News** (consult `pe-community-news/SKILL.md`) — news from 9 PE industry organizations (ACG, SBIA, M&A Source, ILPA, NAIC, TMA, LSTA, ACC/AIMA, MFA). Items feed into existing sections — conferences → Coming This Week, policy → Regulatory Watch, reports → Operational Intel
+5. **Event Calendar** (consult `event-calendar/SKILL.md`) — upcoming economic calendar, central bank meetings, earnings, conferences, IPOs, auctions
 
 **Avoid cross-phase duplication:**
 - Central bank **actions that already happened today** → phase 2 only
-- Central bank **upcoming meeting dates** → phase 4 only
+- Central bank **upcoming meeting dates** → phase 5 only
 - Economic data **already released today** → phase 2 only
-- Economic data **scheduled for future dates** → phase 4 only
+- Economic data **scheduled for future dates** → phase 5 only
 - **Regulatory news** → phase 3 only (not phase 2)
 - **Fund admin/tech vendor news** → phase 3 only
+- **ILPA Reporting Templates / DDQ updates** → phase 3 only (not phase 4)
+- **ILPA events, policy positions, non-template news** → phase 4 only (not phase 3)
+- **PE org conference announcements** → phase 4 only (not phase 5)
+- **PE org policy/advocacy on regulation** → phase 4 only (not phase 3)
 
-5. **Assembly** (consult `intelligence-content/SKILL.md`) — assemble all collected data into the final YAML output files. No additional searches. The intelligence-content SKILL.md contains the exact YAML schemas, complete examples from the live website, and a WRONG vs RIGHT section.
+6. **Assembly** (consult `intelligence-content/SKILL.md`) — assemble all collected data into the final YAML output files. No additional searches. The intelligence-content SKILL.md contains the exact YAML schemas, complete examples from the live website, and a WRONG vs RIGHT section.
 
 ## Output: Intelligence Content YAML Files
 

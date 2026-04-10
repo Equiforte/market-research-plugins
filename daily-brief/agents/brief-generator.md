@@ -27,7 +27,8 @@ find ${CLAUDE_PLUGIN_ROOT:-/shared} -name "SKILL.md" 2>/dev/null | head -20
 Read these in order:
 1. `intelligence-content/SKILL.md` — the EXACT YAML schemas, WRONG vs RIGHT examples, TypeScript interfaces the website uses. This is the most important file.
 2. `market-snapshot/SKILL.md` — tested WebSearch + WebFetch strategy
-3. `daily-brief/SKILL.md` — orchestration flow, section requirements, deduplication rules
+3. `pe-community-news/SKILL.md` — PE industry org monitoring (ACG, SBIA, ILPA, TMA, MFA + batch search)
+4. `daily-brief/SKILL.md` — orchestration flow, section requirements, deduplication rules
 
 ## STEP 1: Pre-flight Checks
 
@@ -48,7 +49,7 @@ Follow the research phases from `daily-brief/SKILL.md`. Each phase has its own S
 Key points:
 - Use WebFetch for `tradingeconomics.com` (structured market data) and `investing.com/economic-calendar/` (calendar data)
 - Do NOT attempt WebFetch on cnbc.com, wsj.com, bloomberg.com, fred.stlouisfed.org (all blocked)
-- Total budget: ~16-20 web operations (WebSearch + WebFetch combined)
+- Total budget: ~22-26 web operations (WebSearch + WebFetch combined)
 
 ## STEP 4: Assembly — Write the Output Files
 
